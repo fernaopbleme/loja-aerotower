@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json.schemastore.org/staticwebapp.config.json",
+
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": ["/assets/*", "/canvaskit/*", "/icons/*", "*.{js,json,png,ico,svg,wasm,ttf,otf,woff,woff2,map}"]
+  },
+
+  "mimeTypes": {
+    ".wasm": "application/wasm",
+    ".mjs": "text/javascript",
+    ".json": "application/json"
+  },
+
+  "globalHeaders": {
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "SAMEORIGIN"
+  },
+
+  "routes": [
+    {
+      "route": "/flutter_service_worker.js",
+      "headers": { "Cache-Control": "no-cache" }
+    },
+    {
+      "route": "/index.html",
+      "headers": { "Cache-Control": "no-cache" }
+    }
+  ]
+}
