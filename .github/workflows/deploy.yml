@@ -1,0 +1,68 @@
+name: Publicar no GitHub Pages
+
+# Publica a loja no GitHub Pages a cada push na main.
+#
+# O base-href sai do nome do repositorio, entao renomear o repo nao quebra
+# o site — e um erro chato de achar, porque a pagina abre em branco sem
+# nenhuma mensagem.
+#
+# O link do formulario e do video ficam em Settings > Secrets and variables
+# > Actions > Variables (nao sao segredos, sao so configuracao):
+#   FORM_URL   link do Google Forms
+#   VIDEO_URL  link do video no YouTube
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Dependencias
+        run: flutter pub get
+
+      - name: Analise
+        run: flutter analyze
+
+      - name: Testes
+        run: flutter test
+
+      - name: Build
+        env:
+          FORM_URL: ${{ vars.FORM_URL }}
+          VIDEO_URL: ${{ vars.VIDEO_URL }}
+        run: |
+          flutter build web --release \
+            --base-href "/${{ github.event.repository.name }}/" \
+            --dart-define=FORM_URL="$FORM_URL" \
+            --dart-define=VIDEO_URL="$VIDEO_URL"
+
+      # O Pages nao tem fallback de SPA: servir o index como 404.html faz
+      # os links diretos (/loja, /produto/modular) abrirem a pagina certa.
+      - name: Fallback de SPA
+        run: cp build/web/index.html build/web/404.html
+
+      # Sem isto o Jekyll ignora arquivos e pastas que comecam com _.
+      - name: Desliga o Jekyll
+        run: touch build/web/.nojekyll
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build/web

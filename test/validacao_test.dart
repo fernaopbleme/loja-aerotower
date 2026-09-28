@@ -10,6 +10,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:aerotower_site/data/services/analytics_service.dart';
 import 'package:aerotower_site/presentation/widgets/interesse_dialog.dart';
 
+/// Backend falso: o padrao e vazio (site publicado nao tem backend),
+/// e ai o servico pula a chamada de proposito.
+const _apiFalsa = 'http://teste.local';
+
 void main() {
   setUp(() => SharedPreferences.setMockInitialValues({}));
 
@@ -18,6 +22,7 @@ void main() {
       Map<String, dynamic>? enviado;
 
       final servico = AnalyticsService(
+        baseUrl: _apiFalsa,
         cliente: MockClient((req) async {
           enviado = jsonDecode(req.body) as Map<String, dynamic>;
           return http.Response('{"sucesso":true}', 201);
@@ -35,6 +40,7 @@ void main() {
       final sessoes = <String>[];
 
       final servico = AnalyticsService(
+        baseUrl: _apiFalsa,
         cliente: MockClient((req) async {
           sessoes.add((jsonDecode(req.body) as Map)['sessao'] as String);
           return http.Response('{}', 201);
@@ -51,6 +57,7 @@ void main() {
 
     test('backend fora do ar nao lanca excecao', () async {
       final servico = AnalyticsService(
+        baseUrl: _apiFalsa,
         cliente: MockClient((_) async => throw const SocketExceptionFake()),
       );
 
@@ -60,6 +67,7 @@ void main() {
 
     test('resposta de erro tambem nao lanca', () async {
       final servico = AnalyticsService(
+        baseUrl: _apiFalsa,
         cliente: MockClient((_) async => http.Response('erro', 500)),
       );
 
@@ -72,6 +80,7 @@ void main() {
       Map<String, dynamic>? enviado;
 
       final servico = AnalyticsService(
+        baseUrl: _apiFalsa,
         cliente: MockClient((req) async {
           enviado = jsonDecode(req.body) as Map<String, dynamic>;
           return http.Response('{"sucesso":true}', 201);
@@ -89,6 +98,7 @@ void main() {
 
     test('422 vira erro de e-mail invalido', () async {
       final servico = AnalyticsService(
+        baseUrl: _apiFalsa,
         cliente: MockClient((_) async => http.Response('{}', 422)),
       );
 
@@ -100,6 +110,7 @@ void main() {
 
     test('500 vira erro visivel', () async {
       final servico = AnalyticsService(
+        baseUrl: _apiFalsa,
         cliente: MockClient((_) async => http.Response('{}', 500)),
       );
 
@@ -122,6 +133,7 @@ void main() {
 
     testWidgets('mostra o formulario com e-mail e produtos', (tester) async {
       await tester.pumpWidget(montar(AnalyticsService(
+        baseUrl: _apiFalsa,
         cliente: MockClient((_) async => http.Response('{}', 201)),
       )));
 
@@ -135,6 +147,7 @@ void main() {
       Map<String, dynamic>? enviado;
 
       await tester.pumpWidget(montar(AnalyticsService(
+        baseUrl: _apiFalsa,
         cliente: MockClient((req) async {
           enviado = jsonDecode(req.body) as Map<String, dynamic>;
           return http.Response('{"sucesso":true}', 201);
@@ -151,6 +164,7 @@ void main() {
 
     testWidgets('e-mail recusado mostra o erro, sem fechar', (tester) async {
       await tester.pumpWidget(montar(AnalyticsService(
+        baseUrl: _apiFalsa,
         cliente: MockClient((_) async => http.Response('{}', 422)),
       )));
 
@@ -166,6 +180,7 @@ void main() {
       Map<String, dynamic>? enviado;
 
       await tester.pumpWidget(montar(AnalyticsService(
+        baseUrl: _apiFalsa,
         cliente: MockClient((req) async {
           enviado = jsonDecode(req.body) as Map<String, dynamic>;
           return http.Response('{}', 201);

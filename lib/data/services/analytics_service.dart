@@ -20,9 +20,18 @@ class AnalyticsService {
   static const _chaveSessao = 'aerotower_sessao';
 
   final http.Client _http;
+
+  /// Endereço do backend. Separado do ApiConfig para o teste poder apontar
+  /// para um servidor falso sem depender de --dart-define.
+  final String _baseUrl;
+
   String? _sessao;
 
-  AnalyticsService({http.Client? cliente}) : _http = cliente ?? http.Client();
+  AnalyticsService({http.Client? cliente, String? baseUrl})
+      : _http = cliente ?? http.Client(),
+        _baseUrl = baseUrl ?? ApiConfig.baseUrl;
+
+  bool get _temBackend => _baseUrl.isNotEmpty;
 
   /// Id anônimo por navegador, criado uma vez e reaproveitado.
   Future<String> _obterSessao() async {
@@ -53,11 +62,15 @@ class AnalyticsService {
 
   /// Registra um clique. Não lança: falha caladamente de propósito.
   Future<void> registrar(String evento, {String pagina = ''}) async {
+    // Sem backend configurado (o caso do site publicado), nem tenta: abrir
+    // conexão para um endereço que não existe só gastaria o timeout.
+    if (!_temBackend) return;
+
     try {
       final sessao = await _obterSessao();
       await _http
           .post(
-            Uri.parse(ApiConfig.eventos),
+            Uri.parse('$_baseUrl/eventos'),
             headers: const {'Content-Type': 'application/json'},
             body: jsonEncode({
               'nome': evento,
@@ -77,11 +90,17 @@ class AnalyticsService {
     required String email,
     required String produto,
   }) async {
+    if (!_temBackend) {
+      throw const InteresseInvalido(
+        'Formulário indisponível no momento. Tente mais tarde.',
+      );
+    }
+
     final sessao = await _obterSessao();
 
     final resposta = await _http
         .post(
-          Uri.parse(ApiConfig.interesse),
+          Uri.parse('$_baseUrl/eventos/interesse'),
           headers: const {'Content-Type': 'application/json'},
           body: jsonEncode({
             'email': email,

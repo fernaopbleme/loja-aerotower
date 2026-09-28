@@ -1,17 +1,23 @@
-/// Endereço do backend que recebe os eventos de validação.
+/// Backend que recebe os eventos de validação.
 class ApiConfig {
-  /// Backend FastAPI no Azure.
+  /// Vazio por padrão: o site publicado no GitHub Pages não tem backend.
   ///
-  /// Trocar aqui se o App Service mudar de nome. Para testar contra um
-  /// backend rodando na sua máquina, use 'http://localhost:8000'.
+  /// Com a URL vazia, o registro de clique é pulado — nem chega a abrir
+  /// conexão. Apontar para um servidor morto seria pior que não tentar:
+  /// cada clique gastaria DNS, conexão e o timeout inteiro, à toa, no
+  /// celular de quem está visitando.
+  ///
+  /// Para rodar com o backend local:
+  ///   flutter run -d chrome --dart-define=BACKEND_URL=http://127.0.0.1:8000
   static const String baseUrl = String.fromEnvironment(
     'BACKEND_URL',
-    defaultValue:
-        'https://aerotowersystem-eqatd2e6d8fghhbj.eastus-01.azurewebsites.net',
+    defaultValue: '',
   );
 
-  static const String eventos = '$baseUrl/eventos';
-  static const String interesse = '$baseUrl/eventos/interesse';
+  static bool get temBackend => baseUrl.isNotEmpty;
+
+  static String get eventos => '$baseUrl/eventos';
+  static String get interesse => '$baseUrl/eventos/interesse';
 
   /// Curto de propósito: o registro de clique nunca deve travar a interface.
   static const Duration timeout = Duration(seconds: 5);
