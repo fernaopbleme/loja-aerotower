@@ -47,7 +47,7 @@ void main() {
     });
 
     test('busca no nome e no resumo, ignorando maiúsculas', () {
-      final loja = LojaStore()..busca = 'BOMBA';
+      final loja = LojaStore()..busca = 'RESERVATÓRIO';
       final ids = loja.produtosFiltrados.map((p) => p.id).toList();
       expect(ids, contains('addons'));
       expect(ids, contains('fullkit'));
@@ -64,9 +64,11 @@ void main() {
     });
 
     test('categoria e busca se combinam', () {
+      // "condutividade" só aparece no resumo do Pro: é justamente o que
+      // separa os dois kits, então serve de filtro dentro da categoria.
       final loja = LojaStore()
         ..categoria = 'Kits completos'
-        ..busca = 'reforçada';
+        ..busca = 'condutividade';
       expect(loja.produtosFiltrados.map((p) => p.id), ['pro']);
     });
 

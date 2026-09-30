@@ -75,19 +75,27 @@ class ProdutoCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.baseline,
             textBaseline: TextBaseline.alphabetic,
             children: [
-              if (produto.prefixo.isNotEmpty) ...[
+              if (Precos.definidos && produto.prefixo.isNotEmpty) ...[
                 Text(
                   produto.prefixo,
                   style: AtText.body(12, color: AtColors.neutral700),
                 ),
                 const SizedBox(width: 7),
               ],
-              Text(formatarMoeda(preco), style: AtText.heading(22)),
+              Text(
+                Precos.definidos ? formatarMoeda(preco) : '—',
+                style: AtText.heading(22,
+                    color: Precos.definidos
+                        ? AtColors.text
+                        : AtColors.neutral500),
+              ),
             ],
           ),
           const SizedBox(height: 6),
           Text(
-            'preço provisório · em 12x no Pix parcelado',
+            Precos.definidos
+                ? 'preço provisório · em 12x no Pix parcelado'
+                : 'preço em definição',
             style: AtText.body(11, color: AtColors.neutral600, height: 1.4),
           ),
           const SizedBox(height: 14),

@@ -63,7 +63,9 @@ class Personalidade {
   });
 }
 
-/// "Uma torre, quatro personalidades" — as cores que já imprimimos.
+/// As cores que já imprimimos de verdade. "Areia" saiu da lista: na peça
+/// impressa ela ficou igual à terracota, e mostrar as duas como opções
+/// diferentes seria vender escolha que não existe.
 const personalidades = <Personalidade>[
   Personalidade(
     nome: 'Terracota',
@@ -82,12 +84,6 @@ const personalidades = <Personalidade>[
     descricao: 'industrial',
     cor: 0xFF2E2B25,
     foto: 'modulos-preto.jpg',
-  ),
-  Personalidade(
-    nome: 'Areia',
-    descricao: 'minimalista',
-    cor: 0xFFEBDDC5,
-    foto: 'modulo-frente.jpg',
   ),
 ];
 

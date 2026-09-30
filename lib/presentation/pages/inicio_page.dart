@@ -478,7 +478,7 @@ class _Marcador extends StatelessWidget {
 }
 
 // ─────────────────────────────────────────────────────────
-/// "Uma torre, quatro personalidades". Usa as peças que já foram
+/// "Uma torre, três personalidades". Usa as peças que já foram
 /// impressas — cada cor é uma foto real, não uma amostra de tinta.
 class _Personalidades extends StatelessWidget {
   const _Personalidades();
@@ -492,7 +492,7 @@ class _Personalidades extends StatelessWidget {
         children: [
           const AtTag('Design'),
           const SizedBox(height: 12),
-          Text('Uma torre, quatro personalidades', style: AtText.h2),
+          Text('Uma torre, três personalidades', style: AtText.h2),
           const SizedBox(height: 8),
           ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 560),

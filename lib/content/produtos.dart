@@ -42,6 +42,13 @@ class Produto {
 }
 
 class Precos {
+  /// Enquanto false, a loja mostra "—" no lugar do valor.
+  ///
+  /// O custo de produção ainda não foi fechado, e número inventado numa
+  /// página de pré-lançamento vira expectativa que depois não se cumpre.
+  /// Ao definir os preços, troque para true.
+  static const definidos = false;
+
   static const modular = 89.0;
   static const furoExtra = 12.0;
   static const fullkit = 649.0;
@@ -142,13 +149,17 @@ const produtos = <Produto>[
     slot: 'p-fullkit',
     foto: 'Foto do kit',
     arquivo: 'modulos-empilhados.jpg',
-    resumo: 'Torre pronta para começar: módulos, bomba, mangueira e '
-        'reservatório.',
+    resumo: 'Torre pronta para começar, com sensor de nível de água. '
+        'Você acompanha o reservatório pelo app.',
     descricao: 'O kit para quem quer plantar no mesmo dia. Vem com módulos '
         'empilháveis, base, reservatório, bomba, mangueira e o manual de '
-        'nutrientes. Tudo compatível com módulos extras comprados depois.',
+        'nutrientes. O sensor ultrassônico mede o nível do reservatório e '
+        'avisa pelo app quando está na hora de completar. Tudo compatível '
+        'com módulos extras comprados depois.',
     specs: [
       ('Conteúdo', '4 módulos + base + reservatório + bomba + mangueira'),
+      ('Sensores', 'ultrassônico (nível de água)'),
+      ('Monitoramento', 'nível do reservatório pelo app'),
       ('Altura montada', '≈ 1,4 m'),
       ('Plantas', 'até 12'),
       ('Reservatório', '30 L'),
@@ -163,14 +174,18 @@ const produtos = <Produto>[
     slot: 'p-pro',
     foto: 'Foto do kit Pro',
     arquivo: 'modulos-preto.jpg',
-    resumo: 'Para produção pequena: torre alta, bomba reforçada e '
-        'reservatório maior.',
+    resumo: 'Todos os sensores: pH, condutividade, temperatura, umidade e '
+        'nível. É a torre que se monitora sozinha.',
     descricao: 'Mesma lógica do Fullkit em escala comercial: mais módulos, '
-        'bomba de maior vazão, reservatório de 60 L e temporizador de ciclo '
-        '— pensado para quem vende folhas e ervas.',
+        'bomba de maior vazão, reservatório de 60 L e temporizador de ciclo. '
+        'A diferença que importa está nos sensores: enquanto o Fullkit mede '
+        'só o nível de água, o Pro acompanha pH, condutividade, temperatura '
+        'e umidade — e avisa antes de a planta dar sinal.',
     specs: [
       ('Conteúdo',
           '7 módulos + base reforçada + reservatório 60 L + bomba 1200 L/h'),
+      ('Sensores', 'pH, condutividade (EC), temperatura, umidade e nível'),
+      ('Monitoramento', 'todas as grandezas pelo app, com alertas'),
       ('Altura montada', '≈ 2,3 m'),
       ('Plantas', 'até 24'),
       ('Extra', 'Temporizador de ciclo liga/desliga'),
