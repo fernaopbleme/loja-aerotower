@@ -1,12 +1,15 @@
 import 'package:go_router/go_router.dart';
 
+import '../../presentation/pages/diy_page.dart';
 import '../../presentation/pages/em_breve_page.dart';
+import '../../presentation/pages/guia_page.dart';
 import '../../presentation/pages/inicio_page.dart';
 import '../../presentation/pages/loja_page.dart';
 import '../../presentation/shell/at_shell.dart';
 import 'rotas.dart';
 
-/// As oito rotas do handoff. Início e loja estão construídas; as demais
+/// As oito rotas do handoff. Início, loja e os guias estão construídos;
+/// as demais
 /// respondem no endereço certo e mostram o placeholder até serem feitas.
 final appRouter = GoRouter(
   routes: [
@@ -19,13 +22,12 @@ final appRouter = GoRouter(
         ),
         GoRoute(
           path: Rotas.diy,
-          builder: (context, state) =>
-              const EmBrevePage(titulo: 'Faça você mesmo'),
+          builder: (context, state) => const DiyPage(),
         ),
         GoRoute(
           path: Rotas.guia,
-          builder: (context, state) => EmBrevePage(
-            titulo: 'Guia: ${state.pathParameters['slug'] ?? ''}',
+          builder: (context, state) => GuiaPage(
+            slug: state.pathParameters['slug'] ?? '',
           ),
         ),
         GoRoute(

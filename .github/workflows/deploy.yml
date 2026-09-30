@@ -6,10 +6,12 @@ name: Publicar no GitHub Pages
 # o site — e um erro chato de achar, porque a pagina abre em branco sem
 # nenhuma mensagem.
 #
-# O link do formulario e do video ficam em Settings > Secrets and variables
-# > Actions > Variables (nao sao segredos, sao so configuracao):
+# O link do formulario e do video ja vem no codigo (lib/core/config/
+# app_links.dart). Para trocar sem mexer no codigo, defina em Settings >
+# Secrets and variables > Actions > Variables:
 #   FORM_URL   link do Google Forms
 #   VIDEO_URL  link do video no YouTube
+# Variavel vazia e ignorada: vale o padrao do codigo.
 
 on:
   push:
