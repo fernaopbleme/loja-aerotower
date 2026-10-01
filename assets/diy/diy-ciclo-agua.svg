@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 300" font-family="Figtree, Helvetica, Arial, sans-serif">
+  <title>Ciclo da água no sistema</title>
+  
+  <rect width="560" height="300" fill="#F5EAD8"/>
+  <g font-size="14" fill="#201E1D" text-anchor="middle">
+    <rect x="20" y="115" width="120" height="70" rx="12" fill="#C6DAE3" stroke="#6E93A8"/><text x="80" y="145">Reservatório</text><text x="80" y="163">(balde)</text>
+    <rect x="160" y="30" width="110" height="60" rx="12" fill="#F9F4ED" stroke="#A19786"/><text x="215" y="58">Bomba</text><text x="215" y="76">empurra</text>
+    <rect x="290" y="30" width="120" height="60" rx="12" fill="#F9F4ED" stroke="#A19786"/><text x="350" y="58">Distribuidor</text><text x="350" y="76">no topo</text>
+    <rect x="420" y="115" width="120" height="70" rx="12" fill="#E1EECC" stroke="#7A8A5E"/><text x="480" y="145">Gotas molham</text><text x="480" y="163">as raízes</text>
+    <rect x="220" y="215" width="130" height="60" rx="12" fill="#F9F4ED" stroke="#A19786"/><text x="285" y="243">Excesso escorre</text><text x="285" y="261">pelo tubo</text>
+  </g>
+  <g stroke="#56633F" stroke-width="2.5" fill="none">
+    <path d="M100 115 C 110 80, 130 60, 158 60"/>
+    <path d="M272 60 L288 60"/>
+    <path d="M412 60 C 450 60, 475 80, 480 112"/>
+    <path d="M470 187 C 440 240, 400 245, 352 245"/>
+    <path d="M218 245 C 150 245, 90 230, 82 188"/>
+  </g>
+  <!-- Pontas das setas como path: o flutter_svg nao implementa
+       <marker>, e sem isto o diagrama perdia a direcao do fluxo. -->
+  <g>
+    <path d="M0 0 L-11 -6 L-11 6 z" fill="#56633F" transform="translate(158 60) rotate(0.0)"/>
+    <path d="M0 0 L-11 -6 L-11 6 z" fill="#56633F" transform="translate(288 60) rotate(0.0)"/>
+    <path d="M0 0 L-11 -6 L-11 6 z" fill="#56633F" transform="translate(480 112) rotate(81.1)"/>
+    <path d="M0 0 L-11 -6 L-11 6 z" fill="#56633F" transform="translate(352 245) rotate(180.0)"/>
+    <path d="M0 0 L-11 -6 L-11 6 z" fill="#56633F" transform="translate(82 188) rotate(-100.8)"/>
+  </g>
+  <text x="280" y="150" font-size="13" text-anchor="middle" fill="#645C50">A mesma água circula o tempo todo</text>
+</svg>

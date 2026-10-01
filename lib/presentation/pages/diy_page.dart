@@ -9,11 +9,15 @@ import '../../core/theme/at_theme.dart';
 import '../../core/widgets/at_button.dart';
 import '../../core/widgets/at_foto.dart';
 import '../../core/widgets/at_tag.dart';
-import '../../core/widgets/image_slot.dart';
 import '../../data/services/analytics_service.dart';
+import 'guia_page.dart';
 
-/// Índice dos guias: conteúdo gratuito que ensina a montar a hidroponia
-/// com o que a pessoa já tem. O produto aparece depois, como atalho.
+/// Conteúdo gratuito que ensina a montar a hidroponia com o que a pessoa já
+/// tem. O produto aparece depois, como atalho para quem não quiser montar.
+///
+/// Com um guia só, esta página **é** o guia: um índice de um item seria um
+/// clique a troco de nada. Ao entrar o segundo, o índice volta sozinho —
+/// daí o `if` em vez de ter apagado a grade.
 class DiyPage extends StatefulWidget {
   const DiyPage({super.key});
 
@@ -30,6 +34,18 @@ class _DiyPageState extends State<DiyPage> {
           pagina: Rotas.diy,
         );
   }
+
+  @override
+  Widget build(BuildContext context) {
+    if (guias.length == 1) {
+      return CorpoGuia(guia: guias.first, mostrarVoltar: false);
+    }
+    return const _Indice();
+  }
+}
+
+class _Indice extends StatelessWidget {
+  const _Indice();
 
   @override
   Widget build(BuildContext context) {
@@ -138,13 +154,12 @@ class _CardGuia extends StatelessWidget {
             cursor: SystemMouseCursors.click,
             child: GestureDetector(
               onTap: () => _abrir(context),
-              child: guia.capa != null
-                  ? AtFoto(guia.capa!, height: 180, radius: 20)
-                  : ImageSlot(
-                      descricao: guia.descricaoCapa,
-                      height: 180,
-                      radius: 20,
-                    ),
+              child: AtFoto(
+                guia.capa.arquivo,
+                pasta: 'diy',
+                height: 180,
+                radius: 20,
+              ),
             ),
           ),
           const SizedBox(height: 10),

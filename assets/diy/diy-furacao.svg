@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420" font-family="Figtree, Helvetica, Arial, sans-serif">
+  <title>Furação escalonada do tubo</title>
+  <rect width="560" height="420" fill="#F5EAD8"/>
+  <text x="260" y="34" font-size="17" font-weight="700" text-anchor="middle" fill="#201E1D">Tubo "aberto" visto de frente</text>
+  <!-- tubo planificado -->
+  <rect x="60" y="60" width="400" height="300" fill="#F9F4ED" stroke="#A19786" stroke-width="2"/>
+  <g stroke="#DCD3C4" stroke-dasharray="4 4">
+    <line x1="160" y1="60" x2="160" y2="360"/><line x1="260" y1="60" x2="260" y2="360"/><line x1="360" y1="60" x2="360" y2="360"/>
+  </g>
+  <g fill="#7A8A5E">
+    <circle cx="160" cy="110" r="14"/><circle cx="160" cy="210" r="14"/><circle cx="160" cy="310" r="14"/>
+    <circle cx="260" cy="160" r="14"/><circle cx="260" cy="260" r="14"/>
+    <circle cx="360" cy="110" r="14"/><circle cx="360" cy="210" r="14"/><circle cx="360" cy="310" r="14"/>
+  </g>
+  <g font-size="13" fill="#201E1D" text-anchor="middle">
+    <text x="160" y="380">Fileira A</text><text x="260" y="380">Fileira B</text><text x="360" y="380">Fileira C</text>
+  </g>
+  <!-- cota -->
+  <g stroke="#201E1D" fill="none">
+    <path d="M475 110 L475 210"/><path d="M470 110 L480 110 M470 210 L480 210"/>
+  </g>
+  <text x="485" y="165" font-size="13" fill="#201E1D">~20 cm</text>
+  <text x="260" y="405" font-size="13" text-anchor="middle" fill="#645C50">Fileiras alternadas: nenhuma planta faz sombra na de baixo</text>
+</svg>

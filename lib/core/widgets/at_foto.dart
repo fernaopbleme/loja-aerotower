@@ -14,6 +14,10 @@ class AtFoto extends StatelessWidget {
   final double radius;
   final BoxFit fit;
 
+  /// Subpasta de assets/. As fotos do produto estao em `fotos`; as do guia
+  /// de montagem, em `diy`.
+  final String pasta;
+
   /// Que parte da foto manter quando a caixa é mais larga que alta. As
   /// fotos são em retrato e o módulo fica no meio, um pouco acima.
   final Alignment alignment;
@@ -25,6 +29,7 @@ class AtFoto extends StatelessWidget {
     this.radius = AtRadius.lg,
     this.fit = BoxFit.cover,
     this.alignment = const Alignment(0, -0.1),
+    this.pasta = 'fotos',
   });
 
   @override
@@ -46,7 +51,7 @@ class AtFoto extends StatelessWidget {
           child: Opacity(
             opacity: 0.94,
             child: Image.asset(
-              'assets/fotos/$arquivo',
+              'assets/$pasta/$arquivo',
               fit: fit,
               alignment: alignment,
               // Enquanto carrega, mostra a mesma cor de fundo dos cards
