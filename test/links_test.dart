@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:aerotower_site/core/config/api_config.dart';
 import 'package:aerotower_site/core/config/app_links.dart';
 
 /// O botão "Entrar" da loja só navega quando `AppLinks.painel` tem valor:
@@ -27,6 +28,23 @@ void main() {
       // absoluto isso tem de ser identidade, senão o destino muda.
       final base = Uri.parse('https://fernaopbleme.github.io/loja-aerotower/');
       expect(base.resolve(AppLinks.painel).toString(), AppLinks.painel);
+    });
+
+    test('o backend de eventos está configurado', () {
+      // Mesma falha do painel, com consequência pior: vazio, o
+      // AnalyticsService retorna na primeira linha e NADA é coletado —
+      // sem erro, sem aviso, sem log. O teste de validação inteiro
+      // produziria zero e ninguém saberia por quê.
+      expect(ApiConfig.temBackend, isTrue);
+      expect(Uri.parse(ApiConfig.baseUrl).hasScheme, isTrue);
+    });
+
+    test('o registro de evento espera mais que o formulário', () {
+      // O backend está no F1 e dorme: acordar leva uns 18s. O registro é
+      // disparado e esquecido, então pode esperar; o formulário tem gente
+      // olhando para a tela e não pode.
+      expect(ApiConfig.timeoutEvento, greaterThan(ApiConfig.timeout));
+      expect(ApiConfig.timeoutEvento.inSeconds, greaterThanOrEqualTo(20));
     });
 
     test('formulário e vídeo continuam preenchidos', () {

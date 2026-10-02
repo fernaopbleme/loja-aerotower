@@ -78,7 +78,7 @@ class AnalyticsService {
               'sessao': sessao,
             }),
           )
-          .timeout(ApiConfig.timeout);
+          .timeout(ApiConfig.timeoutEvento);
     } catch (e) {
       debugPrint('Evento "$evento" não registrado: $e');
     }
