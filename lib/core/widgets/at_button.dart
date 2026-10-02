@@ -2,7 +2,13 @@ import 'package:flutter/material.dart';
 
 import '../theme/at_theme.dart';
 
-enum AtButtonVariant { primary, secondary, ghost }
+/// `destaque` existe para UMA acao por pagina: a que a pessoa precisa
+/// achar sem procurar. Usa a salvia escura em vez do terracota do
+/// `primary` de proposito — na hero ja ha um botao terracota, e repetir a
+/// cor faria o botao importante virar mais um na fileira. Alem disso o
+/// terracota so alcanca 3,0:1 com o texto, abaixo do minimo de 4,5:1; a
+/// salvia escura da 5,4:1.
+enum AtButtonVariant { primary, secondary, ghost, destaque }
 
 /// `.btn` + `.btn-primary/.btn-secondary/.btn-ghost`.
 /// Fonte de título 14px, gap 6, padding 8.8 x 15.84, pílula.
@@ -48,6 +54,10 @@ class _AtButtonState extends State<AtButton> {
         if (_active) return AtColors.mix(AtColors.accent, 0.18);
         if (_hover) return AtColors.mix(AtColors.accent, 0.10);
         return Colors.transparent;
+      case AtButtonVariant.destaque:
+        if (_active) return AtColors.accent2_900;
+        if (_hover) return AtColors.accent2_800;
+        return AtColors.accent2_700;
     }
   }
 
@@ -55,6 +65,7 @@ class _AtButtonState extends State<AtButton> {
         AtButtonVariant.primary => AtColors.bg,
         AtButtonVariant.secondary => AtColors.text,
         AtButtonVariant.ghost => AtColors.accent700,
+        AtButtonVariant.destaque => AtColors.bg,
       };
 
   @override

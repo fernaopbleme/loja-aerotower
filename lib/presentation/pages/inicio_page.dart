@@ -148,6 +148,47 @@ class _Hero extends StatelessWidget {
   }
 }
 
+/// A acao que o teste de validacao mede.
+///
+/// Aparece duas vezes: embaixo do video e no fecho da pagina. O retorno foi
+/// que, existindo so no fecho, ninguem achava — vinha depois das
+/// evidencias, do como funciona, do prato e das cores, e quem nao rolava
+/// ate o fim nunca via. Mesma cor nos dois lugares, de proposito: uma cor,
+/// uma acao.
+class _BotaoInteresse extends StatelessWidget {
+  final bool block;
+
+  const _BotaoInteresse({this.block = false});
+
+  @override
+  Widget build(BuildContext context) {
+    return AtButton(
+      'Me avise sobre o produto!',
+      variant: AtButtonVariant.destaque,
+      height: 52,
+      block: block,
+      leading: const AtIcon(AtIcons.check, size: 17, color: AtColors.bg),
+      onPressed: () {
+        context.read<AnalyticsService>().registrar(
+              Eventos.interesse,
+              pagina: Rotas.inicio,
+            );
+        // Com FORM_URL definido, manda para o Google Forms: funciona num
+        // site publicado sem backend nenhum. Sem ele, abre o formulario
+        // embutido, que depende do backend local.
+        if (AppLinks.temFormularioExterno) {
+          launchUrl(
+            Uri.parse(AppLinks.formularioInteresse),
+            webOnlyWindowName: '_blank',
+          );
+        } else {
+          InteresseDialog.abrir(context);
+        }
+      },
+    );
+  }
+}
+
 class _FiguraVideo extends StatelessWidget {
   const _FiguraVideo();
 
@@ -172,6 +213,10 @@ class _FiguraVideo extends StatelessWidget {
               : 'Espaço reservado para o vídeo do pitch.',
           style: AtText.body(12, color: AtColors.neutral700, height: 1.5),
         ),
+        const SizedBox(height: 18),
+        // Em bloco para acompanhar a largura do video: e o que o torna
+        // impossivel de nao ver, que era o problema relatado.
+        const _BotaoInteresse(block: true),
       ],
     );
   }
@@ -605,28 +650,7 @@ class _BandaInteresse extends StatelessWidget {
       ],
     );
 
-    final botao = AtButton(
-      'Me avise sobre o produto!',
-      height: 48,
-      leading: const AtIcon(AtIcons.check, size: 17, color: AtColors.bg),
-      onPressed: () {
-        context.read<AnalyticsService>().registrar(
-              Eventos.interesse,
-              pagina: Rotas.inicio,
-            );
-        // Com FORM_URL definido, manda para o Google Forms: funciona num
-        // site publicado sem backend nenhum. Sem ele, abre o formulario
-        // embutido, que depende do backend local.
-        if (AppLinks.temFormularioExterno) {
-          launchUrl(
-            Uri.parse(AppLinks.formularioInteresse),
-            webOnlyWindowName: '_blank',
-          );
-        } else {
-          InteresseDialog.abrir(context);
-        }
-      },
-    );
+    const botao = _BotaoInteresse();
 
     return _Secao(
       padding: const EdgeInsets.fromLTRB(24, 44, 24, 0),
