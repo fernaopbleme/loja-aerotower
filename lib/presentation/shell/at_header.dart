@@ -239,9 +239,10 @@ class _BotaoEntrar extends StatelessWidget {
       return;
     }
 
-    // AppLinks.painel é um caminho ("/projeto_aeroponia/painel/"), sem
-    // esquema nem host. Uri.base é a página atual, então resolve() monta o
-    // endereço absoluto certo tanto no localhost quanto no GitHub Pages.
+    // resolve() continua aqui de propósito: com endereço absoluto ele
+    // devolve o próprio endereço, e com um caminho relativo (se alguém
+    // voltar a servir os dois no mesmo site) ele monta o absoluto a partir
+    // da página atual. Os dois casos funcionam sem if.
     final destino = Uri.base.resolve(AppLinks.painel);
     final abriu = await launchUrl(destino, webOnlyWindowName: '_blank');
 

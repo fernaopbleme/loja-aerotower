@@ -26,10 +26,18 @@ class AppLinks {
 
   static bool get temVideoPitch => videoPitchId.isNotEmpty;
 
-  /// Painel de sensores. Vazio enquanto não estiver publicado.
+  /// Painel de sensores — outra aplicação, em outro domínio.
+  ///
+  /// O plano antigo era servir os dois no mesmo site, com o painel em
+  /// "/projeto_aeroponia/painel/", e por isso este valor já foi um caminho
+  /// relativo. Não aconteceu: a loja ficou em fernaopbleme.github.io e o
+  /// painel no repositório do projeto. Agora é o endereço completo.
+  ///
+  /// Estava vazio, e com ele vazio o botão "Entrar" não ia a lugar nenhum
+  /// — só mostrava "o painel ainda não está publicado". Ele está.
   static const String painel = String.fromEnvironment(
     'PAINEL_URL',
-    defaultValue: '',
+    defaultValue: 'https://ribeirocaio11.github.io/projeto_aeroponia/',
   );
 
   static bool get painelPublicado => painel.isNotEmpty;
